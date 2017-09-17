@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="EFDbContext-Web.config Connection String" description="EFDbContext Строка подключения в web.config, используемая приложением для доступа к базе данных." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=Experiments;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\mm\\Documents\\Visual\ Studio\ 2017\\Projects\\EquationsSolver\\WebGUI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='EFDbContext']/@connectionString" />
+  </parameter>
+</parameters>

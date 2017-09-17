@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Domain.UsersDB.ExperimentsDB>
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #equiTable td {
+        vertical-align: middle;
+    }
+</style>
+
+<table id="equiTable" class="table">
+    <thead>
+        <tr>
+            <th class="text-left">Experiment No.</th>
+            <th class="text-center">Parameters</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 1; }
+        @foreach (var line in Model)
+        {
+            <tr>
+                <td class="text-left">@i</td>
+                <td class="text-center">
+                    @Html.ActionLink("ViewParameters", "Parameters", "User", new { ExperId = line.EquationID }, new { @class = "btn btn-default" })
+                </td>
+                <td class="text-right">
+                    @using (Html.BeginForm("Delete", "User", FormMethod.Post))
+                    {
+                        @Html.Hidden("ExperId", line.EquationID)
+                        <input type="submit" class="btn btn-default btn-danger" value="Delete" />
+                    }
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>

@@ -1,0 +1,51 @@
+﻿@model Domain.UsersDB.EquationParameters
+
+@{
+    ViewBag.Title = "Parameters";
+}
+<div class="col-sm-3">
+    <div>
+        <label>EquationName</label>
+        @Model.EquationName
+    </div>
+    <div>
+        <label>InitialConditions</label>
+        @Model.InitialConditions
+    </div>
+    <div>
+        <label>NumericalMethods</label>
+        @Model.NumericalMethods
+    </div>
+    <div>
+        <label>MaxTime</label>
+        @Model.MaxTime
+    </div>
+    <div>
+        <label>TimeStep</label>
+        @Model.TimeStep
+    </div>
+    <div>
+        <label>MaxVar</label>
+        @Model.MaxVar
+    </div>
+    <div>
+        <label>VarStep</label>
+        @Model.VarStep
+    </div>
+    <div>
+        <label>Coeffitient</label>
+        @Model.Coeffitient
+    </div>
+    <div>
+        <label>Use Stability Restrictions</label>
+        @Model.UseCourant
+    </div>
+</div>
+<div class="col-xs-12 col-sm-8">
+    <div id="picture">
+        <button id="restart" class="btn btn-default">replay</button>
+    </div>
+</div>
+<script>
+    d3.json("@Url.Action("GetImage", "User", new { ExperId = Model.EquationID})", draw);
+</script>
