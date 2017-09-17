@@ -1,0 +1,112 @@
+﻿@model Domain.UsersDB.EquationParameters
+
+<div class="row panel">
+    <div class="col-sm-3">
+         @foreach (string item in (List<string>)Session["EquationNames"])
+        {
+            <p>@Html.ActionLink(item, "Equation", new { EquationType = "Domain.Equations." + item }, new { @class = "btn btn-block btn-default btn-lg" + ("Domain.Equations."+item == @Model.EquationName ? " btn-primary" : "") })</p>
+        }
+        @using (Html.BeginForm())
+        {
+            <div id="StabilityWarning" style="display:none">
+                <p class="text-warning">Results might be unstable</p>
+            </div>
+            @Html.ValidationSummary()
+            <div>
+                @Html.HiddenFor(x=>x.EquationName)
+            </div>
+            <div>
+                <label>InitialConditions</label>
+                @Html.DropDownListFor(x => x.InitialConditions, (IEnumerable<SelectListItem>)Session["InitialConditions"], "Choose and option", new { @class = "form-control" })
+            </div>
+            <div>
+                <label>NumericalMethods</label>
+                @Html.DropDownListFor(x => x.NumericalMethods, (IEnumerable<SelectListItem>)Session["NumericalMethods"], "Choose and option", new { @class = "form-control" })
+            </div>
+            <div>
+                <label>MaxTime</label>
+                @Html.TextBoxFor(x => x.MaxTime, new { @class = "form-control" })
+            </div>
+            <div>
+                <label>TimeStep</label>
+                @Html.TextBoxFor(x => x.TimeStep, new { @class = "form-control" })
+            </div>
+            <div>
+                <label>MaxVar</label>
+                @Html.TextBoxFor(x => x.MaxVar, new { @class = "form-control" })
+            </div>
+            <div>
+                <label>VarStep</label>
+                @Html.TextBoxFor(x => x.VarStep, new { @class = "form-control" })
+            </div>
+            <div>
+                <label>Coeffitient</label>
+                @Html.TextBoxFor(x => x.Coeffitient, new { @class = "form-control" })
+            </div>
+            <div>
+                <label>Use Stability Restrictions</label>
+                @Html.CheckBoxFor(x=>x.UseCourant, new { onclick = "stabwarn(this)"})
+            </div>
+            <div>
+                <input type="submit" value="Get the result" class="btn btn-default" />
+            </div>
+        }
+    </div>
+    <div class="col-xs-12 col-sm-8">
+        @if ((bool)Session["Image"])
+        {
+            <h2>The result of the experiment</h2>
+            <div id="picture">
+                <button id="restart" class="btn btn-default">Replay</button>
+            </div>
+            <div>
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Save", "User", FormMethod.Post, new { @class = "btn btn-defeault" }))
+                    {
+                        @Html.ValidationSummary()
+                    <div>
+                        @Html.HiddenFor(x => x.EquationName)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.InitialConditions)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.NumericalMethods)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.MaxTime)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.MaxVar)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.TimeStep)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.VarStep)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.Coeffitient)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.UseCourant)
+                    </div>
+                    <div>
+                        @Html.HiddenFor(x => x.EquationName)
+                    </div>
+		            <div>
+			            @Html.Hidden("graph", @Html.Raw(Session["result"]))
+		            </div>
+                    <div>
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+<script>
+    draw(@Html.Raw(Session["result"]));
+</script>

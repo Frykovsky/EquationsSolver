@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+<div class="container">
+    <h1>Numerical solution of equations</h1>
+    <p>Choose the equation</p>
+</div>
+<row>
+    @foreach (string item in (List<string>)Session["EquationNames"])
+    {
+        <div class="col-sm-4">
+            @{string source = @Url.Content(@item + ".png"); }
+            <a href='@Url.Action("Equation", "Home", new { EquationType = "Domain.Equations." + item }, null)'>
+                <img id="@item" src="@source" width="100" height="100" />
+                <p>@item</p>
+            </a>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#"+"@item").hover(
+                    function () {
+                        $(this).attr("src", '@Url.Content(@item + ".gif")');
+                    },
+                    function () {
+                        $(this).attr("src", '@Url.Content(@item + ".png")');
+                    }
+                );
+            });
+        </script>
+                }
+</row>
